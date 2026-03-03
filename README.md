@@ -67,3 +67,16 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 - json (enabled by default - don't turn it off)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+
+
+
+
+## Anotaciones 
+
+### Como crear u archivo migration
+    Se puede crear con el comando en la cmd: `php spark make:migration NombreMigration`
+
+### Para que sirve $this->forge dentro de una clase que hereda de Migration? 
+    `forge` es una instancia de la clase Database Forge y sirve para `crear`, `modificar` y `eliminar` estructuras de BD
+#### Como eleminar una tabla
+    Con `forge` puedes elimnar una tabla poniendo en la funcion down() del archivo dE la migration `$this->forge->dropTable('NOMBRE_TABLA', true);`
