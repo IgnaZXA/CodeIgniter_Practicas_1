@@ -50,8 +50,6 @@ class UsuariosModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-
-
     // Al usar esta funci´´on en un callback como $beforeInsert 
     // Te da array con un primer valor como 'data', que contiene los 
     // campos declarados en $allowedFields
@@ -63,7 +61,6 @@ class UsuariosModel extends Model
                 PASSWORD_DEFAULT // Algoritmo de hashing por defecto de php
             );
         }
-
         return $data;
     }
 }

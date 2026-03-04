@@ -1,23 +1,81 @@
-<h1>Editar Usuario</h1>
+<?= $this->extend('layout') ?>
+<?= $this->section('content') ?>
 
-<form action="/users/update/<?= $usuario['id'] ?>" method="post">
-    
-    <label>Nombre:</label><br>
-    <input type="text" name="nombre" value="<?= esc($usuario['nombre']) ?>"><br><br>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
 
-    <label>Cuenta Usuario:</label><br>
-    <input type="text" name="cuenta_usuario" value="<?= esc($usuario['cuenta_usuario']) ?>"><br><br>
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Editar Usuario</h4>
+            </div>
 
-    <label>Contraseña:</label><br>
-    <input type="password" name="contrasenia"><br>
-    <small>Déjala vacía si no quieres cambiarla</small><br><br>
+            <div class="card-body">
+                <form action="/users/update/<?= $usuario['id'] ?>" method="post">
 
-    <label>Rol ID:</label><br>
-    <input type="number" name="role_id" value="<?= esc($usuario['role_id']) ?>"><br><br>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text"
+                               class="form-control"
+                               name="nombre"
+                               value="<?= esc($usuario['nombre']) ?>"
+                               required>
+                    </div>
 
-    <label>Activo:</label>
-    <input type="checkbox" name="status" value="1" <?= esc($usuario['status']) ? 'checked' : '' ?>><br><br>
+                    <div class="mb-3">
+                        <label class="form-label">Cuenta Usuario</label>
+                        <input type="text"
+                               class="form-control"
+                               name="cuenta_usuario"
+                               value="<?= esc($usuario['cuenta_usuario']) ?>"
+                               required>
+                    </div>
 
-    <button type="submit">Actualizar</button>
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password"
+                               class="form-control"
+                               name="contrasenia">
+                        <div class="form-text">
+                            Déjala vacía si no quieres cambiarla
+                        </div>
+                    </div>
 
-</form>
+                    <div class="mb-3">
+                        <label class="form-label">Rol ID</label>
+                        <input type="number"
+                               class="form-control"
+                               name="role_id"
+                               value="<?= esc($usuario['role_id']) ?>"
+                               required>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input type="checkbox"
+                               class="form-check-input"
+                               id="status"
+                               name="status"
+                               value="1"
+                               <?= esc($usuario['status']) ? 'checked' : '' ?>>
+                        <label class="form-check-label" for="status">
+                            Activo
+                        </label>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="/users" class="btn btn-secondary">
+                            Cancelar
+                        </a>
+
+                        <button type="submit" class="btn btn-primary">
+                            Actualizar
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<?= $this->endSection() ?>
