@@ -12,6 +12,7 @@ $routes->get('/', 'Home::index');
 
 // --- Rutas de Usuarios --- //
 $routes->get ('/users',                 [UsuariosController::class, 'index'] );         // Muestra listado
+$routes->get ('/users/login',           [AuthController::class, 'login'] );         // Muestra listado
 
 $routes->get ('/users/create',          [UsuariosController::class, 'create']);         // Muestra formulario
 $routes->post('/users/save',            [UsuariosController::class, 'save']  );         // Procesa el formulario (crear o actualizar)

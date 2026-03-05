@@ -3,6 +3,18 @@
 
 <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6">
+
+        <?php if (session()->getFlashdata('errors')): ?>
+            <!-- TODO: Esto lo tiene que gestionar el controlador. --->
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                        <li><?= esc($error) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
+        <?php endif; ?>
         <div class="card shadow">
             <div class="card-header bg-success text-white">
                 <h4 class="mb-0">Crear Usuario</h4>
@@ -27,8 +39,16 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Rol ID:</label>
-                        <input type="number" class="form-control" name="role_id" required>
+                        <label class="form-label">Rol:</label>
+                        <select name="role_id" class="form-control">
+                            <option value="" disabled selected>Selecciona un rol</option> <!-- PLACEHOLDER --->
+                            <?php foreach ($roles as $rol): ?>
+                                <option value="<?= $rol['id'] ?>">
+                                    <?= esc($rol['rol']) ?>
+                                </option>
+
+                            <?php endforeach; ?>
+                        </select>
                     </div>
 
 
