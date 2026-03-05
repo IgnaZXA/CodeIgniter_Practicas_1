@@ -34,8 +34,27 @@ class UsuariosModel extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
+    protected $validationRules      = [
+            'nombre'            => 'required|min_length[3]',
+            'cuenta_usuario'    => 'required|min_length[3]',
+            'contrasenia'       => 'required|min_length[3]',
+            'role_id'           => 'required|integer|is_not_unique[roles.id]' // Con is_not_unique[roles.id] te aseguras de que role_id no tenga un valor que no exista en el campo id de la tabla roles de la BD
+        ];
+
+    protected $validationMessages   = [
+        'nombre'    => [
+            'required'      => 'El nombre es obligatorio',
+            'min_length'    => 'El nombre debe tener al menos 3 caracters'
+        ],
+        'cuenta_usuario' => [
+            'required'      => 'Es necesario añadir una cuenta de usuario',
+            'min_length'    => 'La cuenta de usuario debe tener al menos 3 caracteres',
+        ],
+        'contrasenia' => [
+            'required'      => 'Es necesario añadir la contraseña de usuario',
+            'min_length'    => 'La cuenta de usuario debe tener al menos 3 caracteres'
+        ],
+    ];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 

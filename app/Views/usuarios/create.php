@@ -5,7 +5,6 @@
     <div class="col-md-8 col-lg-6">
 
         <?php if (session()->getFlashdata('errors')): ?>
-            <!-- TODO: Esto lo tiene que gestionar el controlador. --->
             <div class="alert alert-danger">
                 <ul class="mb-0">
                     <?php foreach (session()->getFlashdata('errors') as $error): ?>
@@ -15,6 +14,7 @@
             </div>
 
         <?php endif; ?>
+
         <div class="card shadow">
             <div class="card-header bg-success text-white">
                 <h4 class="mb-0">Crear Usuario</h4>
@@ -50,7 +50,6 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
-
 
                     <div class="form-check mb-4">
                         <input type="checkbox" class="form-check-input" id="status" name="status" value="1" checked>
