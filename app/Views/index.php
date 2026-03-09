@@ -34,37 +34,28 @@
                         <th>Cuenta</th>
                         <th>Rol</th>
                         <th>Contraseña Hasheada</th>
-                        <th class="text-center">Acciones</th>
+                        <th id='actionColumn' class="text-center">Acciones</th>
+                    </tr>
+
+                    <tr>
+                        <th><input type="text" placeholder="Buscar ID"></th>
+                        <th><input type="text" placeholder="Buscar nombre"></th>
+                        <th><input type="text" placeholder="Buscar cuenta"></th>
+                        <th>
+                            <select name="role_id" class="form-control">
+                                <option value="" disabled selected>Selecciona un rol</option> <!-- PLACEHOLDER --->
+                                <?php foreach ($roles as $rol): ?>
+                                    <option value="<?= esc($rol['rol']) ?>">
+                                        <?= esc($rol['rol']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($usuarios as $usuario): ?>
-                        <tr>
-                            <td><?= $usuario['id'] ?></td>
-                            <td><?= esc($usuario['nombre']) ?></td>
-                            <td><?= esc($usuario['cuenta_usuario']) ?></td>
-                            <td>
-                                <span class="badge bg-info text-dark">
-                                    <?= esc($usuario['role_id']) ?>
-                                </span>
-                            </td>
-                            <td>
-                                <p><?= $usuario['contrasenia'] ?></p>
-                            </td>
-                            <td class="text-center">
-                                <a href="/users/edit/<?= $usuario['id'] ?>"
-                                    class="btn btn-sm btn-primary">
-                                    Editar
-                                </a>
-
-                                <a href="/users/delete/<?= $usuario['id'] ?>"
-                                    class="btn btn-sm btn-danger"
-                                    onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
-                                    Eliminar
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -73,5 +64,5 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
-    <script src="/js/loadIndexTable.js"></script>
+<script src="/js/loadIndexTable.js"></script>
 <?= $this->endSection() ?>

@@ -21,10 +21,26 @@ class UsuariosController extends BaseController
         $this->usuariosServices = new UsuariosServices();
     }
 
+    public function getAllUsersJSON() {
+        $users = $this->usuariosModel
+            ->select('usuarios.id, usuarios.nombre, usuarios.cuenta_usuario, roles.rol, usuarios.contrasenia')
+            ->join('roles', 'roles.id = usuarios.role_id')
+            ->findAll();
+        $json   = json_encode($users);
+        return $json;
+    }
+
     public function index(): string | RedirectResponse
     {
         // Obtener lista de usuarios
-        $data['usuarios'] = $this->usuariosModel->findAll();        // Obtiene la lista de todos los usuarios almacenados en la BD.
+        // $data['usuarios']   = $this->usuariosModel->findAll();        // Obtiene la lista de todos los usuarios almacenados en la BD.
+        $data['usuarios'] = $this->usuariosModel
+            -> select('usuarios.*, roles.rol')
+            ->join('roles', 'roles.id = usuarios.role_id')
+            ->findAll();
+
+        $data['roles'] = $this->rolesModel->findAll();
+
         return view('/index', $data);                       // De la vista creada: en app/Views/index
     }
 

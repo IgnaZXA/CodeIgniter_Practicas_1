@@ -15,7 +15,7 @@
 
 <body>
 
-    <div class="container mt-1 md-1">
+    <div class="container-fluid mt-1 md-1">
         <?= $this->renderSection('content') ?>
     </div>
 
@@ -30,6 +30,10 @@
 
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.3.7/js/dataTables.js"></script>
+    
+    <!-- DataTables columnControl library files --->
+    <script src="https://cdn.datatables.net/columncontrol/1.2.0/js/dataTables.columnControl.js"></script>
+    <script src="https://cdn.datatables.net/columncontrol/1.2.0/js/columnControl.dataTables.js"></script>
 
 
     <!-- SECTION PARA SCRIPTS PROPIOS, dependientes de cada vista --->
