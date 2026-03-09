@@ -25,12 +25,12 @@
 
                     <div class="mb-3">
                         <label class="form-label">Nombre:</label>
-                        <input type="text" class="form-control" name="nombre" required>
+                        <input type="text" class="form-control" name="nombre" value="<?= esc(old("nombre")) ?>" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Cuenta Usuario:</label>
-                        <input type="text" class="form-control" name="cuenta_usuario" required>
+                        <input type="text" class="form-control" name="cuenta_usuario" value="<?= esc(old("cuenta_usuario")) ?>" required>
                     </div>
 
                     <div class="mb-3">

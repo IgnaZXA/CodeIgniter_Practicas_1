@@ -26,7 +26,7 @@
 
         <h1>Bienvenido a tu zona.</h1>
         <div class="table-responsive">
-            <table class="table table-striped table-hover align-middle">
+            <table id="usersTable" class="table table-striped table-hover align-middle">
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
@@ -70,5 +70,8 @@
         </div>
     </div>
 </div>
+<?= $this->endSection() ?>
 
+<?= $this->section('scripts') ?>
+    <script src="/js/loadIndexTable.js"></script>
 <?= $this->endSection() ?>

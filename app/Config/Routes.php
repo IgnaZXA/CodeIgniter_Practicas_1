@@ -25,7 +25,7 @@ $routes->get ('/users/delete/(:num)',   [UsuariosController::class, 'delete']); 
 
 $routes->get ('/auth/loginScreen',      [AuthController::class, 'login']);              // Muestra el formulario para logear al usuario
 $routes->post('/auth/login',            [AuthController::class, 'authenticate']);       // Logica para autenticar el usuario logeado
-$routes->get('/auth/logout',            [AuthController::class, 'logout']);             // Logica para autenticar el usuario logeado
+$routes->get ('/auth/logout',            [AuthController::class, 'logout']);             // Logica para autenticar el usuario logeado
 
 
 
