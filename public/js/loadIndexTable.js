@@ -1,3 +1,5 @@
     window.onload = function() {
-        new DataTable('#usersTable');
+        new DataTable('#usersTable', {
+            searching: false
+        });
     };
