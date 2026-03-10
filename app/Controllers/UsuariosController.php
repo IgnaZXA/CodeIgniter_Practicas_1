@@ -7,6 +7,8 @@ use App\Models\RolesModel;
 use App\Models\UsuariosModel;
 use App\Services\UsuariosServices;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\ResponseInterface;
+use Throwable;
 
 class UsuariosController extends BaseController
 {
@@ -21,23 +23,29 @@ class UsuariosController extends BaseController
         $this->usuariosServices = new UsuariosServices();
     }
 
-    public function getAllUsersJSON() {
-        $users = $this->usuariosModel
-            ->select('usuarios.id, usuarios.nombre, usuarios.cuenta_usuario, roles.rol, usuarios.contrasenia')
-            ->join('roles', 'roles.id = usuarios.role_id')
-            ->findAll();
-        $json   = json_encode($users);
-        return $json;
+    public function getAllUsersJSON(): ResponseInterface
+    {
+        try {
+            $users = $this->usuariosModel->getUsersWithRoles();
+            return $this->response->setJSON([
+                'status'    => 'OK',
+                'data'      => $users
+            ]);
+        } catch (Throwable $e) {
+            log_message('error', '[UsuariosController::getAllUsersJson' . $e->getMessage());
+            return  $this->response->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR)
+                ->setJSON([
+                    'status' => 'FAILED',
+                    'message' => 'Internal Sever Error'
+                ]);
+        }
     }
 
     public function index(): string | RedirectResponse
     {
         // Obtener lista de usuarios
         // $data['usuarios']   = $this->usuariosModel->findAll();        // Obtiene la lista de todos los usuarios almacenados en la BD.
-        $data['usuarios'] = $this->usuariosModel
-            -> select('usuarios.*, roles.rol')
-            ->join('roles', 'roles.id = usuarios.role_id')
-            ->findAll();
+        $data['usuarios'] = $this->usuariosModel->getUsersWithRoles();
 
         $data['roles'] = $this->rolesModel->findAll();
 

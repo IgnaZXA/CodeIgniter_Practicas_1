@@ -3,7 +3,7 @@ window.onload = function () {
 
         ajax: {
             url: '/api/users',
-            dataSrc: ''
+            dataSrc: 'data'
         },
 
         columns: [
@@ -11,7 +11,6 @@ window.onload = function () {
             { data: 'nombre' },
             { data: 'cuenta_usuario' },
             { data: 'rol' },
-            { data: 'contrasenia' },
             {
                 data: 'id',
                 render: function (data) {
@@ -27,28 +26,25 @@ window.onload = function () {
         ],
         // searching: false,
         dom: 'lrtip',
-        columnDefs: [{ orderable: false, targets: 5 }],     // Definicion de las columnas --> "La columna con index 5 no es ordenable" (si fuera mas de una columna encapsula en un array)
+        columnDefs: [{ orderable: false, targets: 4 }],     // Definicion de las columnas --> "La columna con index 4 no es ordenable" (si fuera mas de una columna encapsula en un array)
         order: [[1, 'asc']],                                // Orden ascendente en base a la columna con index 1 (empieza con el 0)
         orderCellsTop: true,                                // Para inicar en que fila de <thead> se añaden los eventos de ordenacion
     });
 
-    document.querySelectorAll('#usersTable thead tr:nth-child(2) th input')
-        .forEach((input, index) => {
-
-            input.addEventListener('keyup', function () {
-
-                if (table.column(index).search() !== this.value) {
-                    table.column(index).search(this.value).draw();
-                }
-
-            });
-
+    // todos los filtros con input
+    $('.filterInput').each(function (index) {
+        $(this).on('keyup', function () {
+            if (table.column(index).search() !== this.value) {
+                table.column(index).search(this.value).draw();
+            }
         });
+    });
 
-    document.querySelector('#usersTable thead select')
-        .addEventListener('change', function () {
-
-            table.column(3).search(this.value).draw();
-
-        });
+    // Filtro por rol
+    $('#rol_filter').on('change', function () { // .on('change', function...) es el .onChange
+        let obtainedFilterVal = $(this)[0].value;
+        table.column(3).search($(this)[0].value, {
+            exact: true
+        }).draw();
+    });
 };

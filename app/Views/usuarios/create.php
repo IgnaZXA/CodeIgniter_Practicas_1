@@ -46,7 +46,6 @@
                                 <option value="<?= $rol['id'] ?>">
                                     <?= esc($rol['rol']) ?>
                                 </option>
-
                             <?php endforeach; ?>
                         </select>
                     </div>

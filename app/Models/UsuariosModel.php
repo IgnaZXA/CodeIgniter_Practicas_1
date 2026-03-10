@@ -35,11 +35,11 @@ class UsuariosModel extends Model
 
     // Validation
     protected $validationRules      = [
-            'nombre'            => 'required|min_length[3]',
-            'cuenta_usuario'    => 'required|min_length[3]',
-            'contrasenia'       => 'required|min_length[3]',
-            'role_id'           => 'required|integer|is_not_unique[roles.id]' // Con is_not_unique[roles.id] te aseguras de que role_id no tenga un valor que no exista en el campo id de la tabla roles de la BD
-        ];
+        'nombre'            => 'required|min_length[3]',
+        'cuenta_usuario'    => 'required|min_length[3]',
+        'contrasenia'       => 'required|min_length[3]',
+        'role_id'           => 'required|integer|is_not_unique[roles.id]' // Con is_not_unique[roles.id] te aseguras de que role_id no tenga un valor que no exista en el campo id de la tabla roles de la BD
+    ];
 
     protected $validationMessages   = [
         'nombre'    => [
@@ -72,7 +72,10 @@ class UsuariosModel extends Model
     // Al usar esta funci´´on en un callback como $beforeInsert 
     // Te da array con un primer valor como 'data', que contiene los 
     // campos declarados en $allowedFields
-    protected function hashPassword(array $data) 
+    /** 
+     * @return array<int, array<string, mixed>>
+     */
+    protected function hashPassword(array $data): array
     {
         if (isset($data['data']['contrasenia'])) { // Se comprueba que el array contiene el campo contrasenia
             $data['data']['contrasenia'] = password_hash(
@@ -81,5 +84,21 @@ class UsuariosModel extends Model
             );
         }
         return $data;
+    }
+
+    /**
+     * @return array<int, array{
+     *     id:int,
+     *     nombre:string,
+     *     cuenta_usuario:string,
+     *     rol:string,
+     *     contrasenia:string
+     * }>>
+     */
+    public function getUsersWithRoles(): array
+    {
+        return $this->select('usuarios.*, roles.rol')
+            ->join('roles', 'roles.id = usuarios.role_id')
+            ->findAll();
     }
 }

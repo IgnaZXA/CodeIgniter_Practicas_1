@@ -33,17 +33,17 @@
                         <th>Nombre</th>
                         <th>Cuenta</th>
                         <th>Rol</th>
-                        <th>Contraseña Hasheada</th>
                         <th id='actionColumn' class="text-center">Acciones</th>
                     </tr>
 
                     <tr>
-                        <th><input type="text" placeholder="Buscar ID"></th>
-                        <th><input type="text" placeholder="Buscar nombre"></th>
-                        <th><input type="text" placeholder="Buscar cuenta"></th>
+                        <th><input class="filterInput" type="text" placeholder="Buscar ID"></th>
+                        <th><input class="filterInput" type="text" placeholder="Buscar nombre"></th>
+                        <th><input class="filterInput" type="text" placeholder="Buscar cuenta"></th>
                         <th>
-                            <select name="role_id" class="form-control">
+                            <select id="rol_filter" name="role_id" class="form-control">
                                 <option value="" disabled selected>Selecciona un rol</option> <!-- PLACEHOLDER --->
+                                <option value="">Todos los roles</option>
                                 <?php foreach ($roles as $rol): ?>
                                     <option value="<?= esc($rol['rol']) ?>">
                                         <?= esc($rol['rol']) ?>
@@ -51,7 +51,6 @@
                                 <?php endforeach; ?>
                             </select>
                         </th>
-                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
