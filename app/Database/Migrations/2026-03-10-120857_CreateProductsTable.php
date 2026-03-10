@@ -55,7 +55,6 @@ class CreateProductsTable extends Migration
                 'type'              => 'DATETIME',
                 'null'              => true,
             ],
-
         ]);
 
         // 2º Crear claves primarias
