@@ -41,12 +41,12 @@ class CreateUsuariosTable extends Migration
 
             ],
 
-            'created_at' => [ // De momento no añado nada extra en este campo de auditoria, pues el modelo de esta tabla lo gestionará
+            'created_at' => [ 
                 'type'              => 'DATETIME',
                 'null'              => true,
             ],
 
-            'updated_at' => [ // De momento no añado nada extra en este campo de auditoria, pues el modelo de esta tabla lo gestionará
+            'updated_at' => [
                 'type'              => 'DATETIME',
                 'null'              => true,
             ],
