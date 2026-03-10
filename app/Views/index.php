@@ -61,9 +61,9 @@
     </div>
 </div>
 
-<div>
-          <a href="/prducts/" class="btn btn-success">
-            + Crear nuevo usuario
+<div class="text-center mt-4">
+          <a href="/products/" class="btn btn-success">
+            Ver Productos
         </a>  
 </div>
 <?= $this->endSection() ?>

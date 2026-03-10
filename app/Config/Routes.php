@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\AuthController;     // <--- Importar el controlador para la autenticacion
+use App\Controllers\ProductsController;
 use CodeIgniter\Router\RouteCollection;
 use App\Controllers\UsuariosController; // <--- Importar el controlador de usuarios
 
@@ -11,29 +12,42 @@ $routes->get('/', 'Home::index');
 
 
 // ---- Rutas de Usuarios ---- //
-$routes->get ('/users',                 [UsuariosController::class, 'index'], ['filter' => 'auth'] );         // Muestra listado
-$routes->get ('/users/login',           [AuthController::class, 'login'] );         // Muestra listado
+$routes->get ('/users',                 [UsuariosController::class, 'index'], ['filter' => 'auth'] );   // Muestra listado
+$routes->get ('/users/login',           [AuthController::class, 'login'] );                             // Muestra listado
 
-$routes->get ('/users/create',          [UsuariosController::class, 'create']);         // Muestra formulario
-$routes->post('/users/save',            [UsuariosController::class, 'save']  );         // Procesa el formulario (crear o actualizar)
+$routes->get ('/users/create',          [UsuariosController::class, 'create']);                         // Muestra formulario
+$routes->post('/users/save',            [UsuariosController::class, 'save']  );                         // Procesa el formulario (crear o actualizar)
 
-$routes->get ('/users/edit/(:num)',     [UsuariosController::class, 'edit']  );         // Recibe automaticamente el ID en el m´´etodo edit:  edit($id)
-$routes->post('/users/update/(:num)',   [UsuariosController::class, 'update']);         // Actualiza un usuario.
+$routes->get ('/users/edit/(:num)',     [UsuariosController::class, 'edit']  );                         // Recibe automaticamente el ID en el m´´etodo edit:  edit($id)
+$routes->post('/users/update/(:num)',   [UsuariosController::class, 'update']);                         // Actualiza un usuario.
 
-$routes->get ('/users/delete/(:num)',   [UsuariosController::class, 'delete']);         // Elimina el usuario con ese ID. // TODO: Cambiar el GET por POST o DELETE 
+$routes->get ('/users/delete/(:num)',   [UsuariosController::class, 'delete']);                         // Elimina el usuario con ese ID. // TODO: Cambiar el GET por POST o DELETE 
 
-
-$routes->get ('/auth/loginScreen',      [AuthController::class, 'login']);              // Muestra el formulario para logear al usuario
-$routes->post('/auth/login',            [AuthController::class, 'authenticate']);       // Logica para autenticar el usuario logeado
-$routes->get ('/auth/logout',           [AuthController::class, 'logout']);            // Logica para autenticar el usuario logeado
+// ---- Rutas de Autenticacion ---- //
+$routes->get ('/auth/loginScreen',      [AuthController::class, 'login']);                              // Muestra el formulario para logear al usuario
+$routes->post('/auth/login',            [AuthController::class, 'authenticate']);                       // Logica para autenticar el usuario logeado
+$routes->get ('/auth/logout',           [AuthController::class, 'logout']);                             // Logica para autenticar el usuario logeado
 
 
 // ---- Rutas de Productos ---- //
-// $routes->get('/products', );
+$routes->get ('/products',               [ProductsController::class, 'index'], ['filter' => 'auth'] );   // 
+
+// TODO: Crear los metodos del controlador par ael CRUD.
+    // ---- Crear productos ---- //
+$routes->get ('/products/create',        [ProductsController::class, 'create']);
+$routes->post('/products/save',          [ProductsController::class, 'save']);
+
+    // ---- Actualizar productos ---- //
+$routes->get('/products/edit/(:num)',    [ProductsController::class, 'edit']);
+$routes->post('(products/update/(:num)', [ProductsController::class, 'update']);
+
+    // ---- Eliminar productos ---- //
+$routes->delete('/products/delete/(:num)', [ProductsController::class, 'delete']);
 
 
 // --- API REST ENDPOINTS --- //
 $routes->get('/api/users',              [UsuariosController::class, 'getAllUsersJSON']);
+$routes->get('/api/products',              [ProductsController::class, 'getAllProductsJSON']);
 
 
 

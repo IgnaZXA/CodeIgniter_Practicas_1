@@ -8,17 +8,15 @@ use App\Services\UsuariosServices;
 class AuthServices
 {
     protected $usuariosModel;
-    protected $usuariosServices;
 
     public function __construct()
     {
         $this->usuariosModel = new UsuariosModel();
-        $this->usuariosServices = new UsuariosServices();
     }
 
     public function authenticate(string $account, string $pass)
     {
-        $usuario = $this->usuariosServices->getUsuarioByAccount($account);
+        $usuario = $this->usuariosModel->getUsuarioByAccount($account);
 
         if (!$usuario) {
             return null;

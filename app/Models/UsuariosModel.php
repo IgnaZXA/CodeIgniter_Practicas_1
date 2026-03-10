@@ -101,4 +101,18 @@ class UsuariosModel extends Model
             ->join('roles', 'roles.id = usuarios.role_id')
             ->findAll();
     }
+
+    
+    // --- READ --- //
+    public function getUsuarioById($id)
+    {
+        return $this->usuariosModel->where('id', $id);
+    }
+
+    public function getUsuarioByAccount($account)
+    {
+        return $this->usuariosModel->where("cuenta_usuario", $account)->first();
+    }
+
+    // --- WRITE --- //
 }

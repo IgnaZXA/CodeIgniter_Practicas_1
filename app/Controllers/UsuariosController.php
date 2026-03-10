@@ -44,11 +44,10 @@ class UsuariosController extends BaseController
     public function index(): string | RedirectResponse
     {
         // Obtener lista de usuarios
-        // $data['usuarios']   = $this->usuariosModel->findAll();        // Obtiene la lista de todos los usuarios almacenados en la BD.
-        $data['usuarios'] = $this->usuariosModel->getUsersWithRoles();
+        // $data['usuarios']    = $this->usuariosModel->findAll();              // Obtiene la lista de todos los usuarios almacenados en la BD.
+        // $data['usuarios']    = $this->usuariosModel->getUsersWithRoles();    //
 
         $data['roles'] = $this->rolesModel->findAll();
-
         return view('/index', $data);                       // De la vista creada: en app/Views/index
     }
 
