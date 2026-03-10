@@ -10,7 +10,7 @@ use App\Controllers\UsuariosController; // <--- Importar el controlador de usuar
 $routes->get('/', 'Home::index');
 
 
-// --- Rutas de Usuarios --- //
+// ---- Rutas de Usuarios ---- //
 $routes->get ('/users',                 [UsuariosController::class, 'index'], ['filter' => 'auth'] );         // Muestra listado
 $routes->get ('/users/login',           [AuthController::class, 'login'] );         // Muestra listado
 
@@ -26,6 +26,10 @@ $routes->get ('/users/delete/(:num)',   [UsuariosController::class, 'delete']); 
 $routes->get ('/auth/loginScreen',      [AuthController::class, 'login']);              // Muestra el formulario para logear al usuario
 $routes->post('/auth/login',            [AuthController::class, 'authenticate']);       // Logica para autenticar el usuario logeado
 $routes->get ('/auth/logout',           [AuthController::class, 'logout']);            // Logica para autenticar el usuario logeado
+
+
+// ---- Rutas de Productos ---- //
+// $routes->get('/products', );
 
 
 // --- API REST ENDPOINTS --- //

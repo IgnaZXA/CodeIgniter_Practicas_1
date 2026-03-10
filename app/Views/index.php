@@ -60,6 +60,12 @@
         </div>
     </div>
 </div>
+
+<div>
+          <a href="/prducts/" class="btn btn-success">
+            + Crear nuevo usuario
+        </a>  
+</div>
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
