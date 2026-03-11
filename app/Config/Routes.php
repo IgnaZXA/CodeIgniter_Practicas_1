@@ -39,15 +39,15 @@ $routes->post('/products/save',          [ProductsController::class, 'save']);
 
     // ---- Actualizar productos ---- //
 $routes->get('/products/edit/(:num)',    [ProductsController::class, 'edit']);
-$routes->post('(products/update/(:num)', [ProductsController::class, 'update']);
+$routes->post('/products/update/(:num)', [ProductsController::class, 'update']);
 
     // ---- Eliminar productos ---- //
-$routes->delete('/products/delete/(:num)', [ProductsController::class, 'delete']);
+$routes->get('/products/delete/(:num)',  [ProductsController::class, 'delete']); // TODO: Cambiar de get a delete  
 
 
 // --- API REST ENDPOINTS --- //
-$routes->get('/api/users',              [UsuariosController::class, 'getAllUsersJSON']);
-$routes->get('/api/products',              [ProductsController::class, 'getAllProductsJSON']);
+$routes->get('/api/users',                  [UsuariosController::class, 'getAllUsersJSON']);
+$routes->get('/api/products',               [ProductsController::class, 'getAllProductsJSON']);
 
 
 

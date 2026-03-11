@@ -102,16 +102,18 @@ class UsuariosModel extends Model
             ->findAll();
     }
 
+
+    // TODO: Tipar bien el resutlado de las funciones
     
     // --- READ --- //
-    public function getUsuarioById($id)
+    public function getUsuarioById($id) : object
     {
-        return $this->usuariosModel->where('id', $id);
+        return $this->where('id', $id)->first();
     }
 
-    public function getUsuarioByAccount($account)
+    public function getUsuarioByAccount($account) : object
     {
-        return $this->usuariosModel->where("cuenta_usuario", $account)->first();
+        return $this->where("cuenta_usuario", $account)->first();
     }
 
     // --- WRITE --- //

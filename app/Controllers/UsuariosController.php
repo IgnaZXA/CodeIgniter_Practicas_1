@@ -32,7 +32,7 @@ class UsuariosController extends BaseController
                 'data'      => $users
             ]);
         } catch (Throwable $e) {
-            log_message('error', '[UsuariosController::getAllUsersJson' . $e->getMessage());
+            log_message('error', '[UsuariosController::getAllUsersJson]' . $e->getMessage());
             return  $this->response->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR)
                 ->setJSON([
                     'status' => 'FAILED',
@@ -41,7 +41,10 @@ class UsuariosController extends BaseController
         }
     }
 
-    public function index(): string | RedirectResponse
+
+    // TODO: Añadir los try/catch en las funciones del controlador de usuarios
+    
+    public function index(): string
     {
         // Obtener lista de usuarios
         // $data['usuarios']    = $this->usuariosModel->findAll();              // Obtiene la lista de todos los usuarios almacenados en la BD.
@@ -80,7 +83,7 @@ class UsuariosController extends BaseController
 
     public function edit($id): string
     {
-        $data['usuario'] = $this->usuariosModel->find($id);
+        $data['usuario'] = $this->usuariosModel->getUsuarioById($id);
         $data['roles']   = $this->rolesModel->findAll();
 
         if (!$data['usuario']) {

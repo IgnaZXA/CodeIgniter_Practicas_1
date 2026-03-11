@@ -62,4 +62,19 @@ class ProductsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+
+    public function getProductByID($id) {
+        return $this->find($id);
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductsWithCategories(): array  { // TODO: Tipar resultado
+        return $this
+        ->select('products.*, product_categories.category_name')
+        ->join('product_categories', 'product_categories.id = products.category_id')
+        ->findAll();
+    }
 }

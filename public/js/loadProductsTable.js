@@ -1,5 +1,5 @@
 window.onload = function () {
-    let table = new DataTable('#usersTable', {
+    let table = new DataTable('#productsTable', {
 
         ajax: {
             url: '/api/products',
@@ -8,16 +8,17 @@ window.onload = function () {
 
         columns: [
             { data: 'id' },
-            { data: 'nombre' },
-            { data: 'cuenta_usuario' },
-            { data: 'rol' },
+            { data: 'name' },
+            { data: 'price' },
+            { data: 'stock' },
+            { data: 'category_name' },
             {
                 data: 'id',
                 render: function (data) {
                     return `
-                        <a href="/users/edit/${data}" class="btn btn-sm btn-primary">Editar</a>
-                        <a href="/users/delete/${data}" class="btn btn-sm btn-danger"
-                           onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
+                        <a href="/products/edit/${data}" class="btn btn-sm btn-primary">Editar</a>
+                        <a href="/products/delete/${data}" class="btn btn-sm btn-danger"
+                           onclick="return confirm('¿Estás seguro de eliminar este producto?')">
                            Eliminar
                         </a>
                     `;
@@ -25,9 +26,9 @@ window.onload = function () {
             }
         ],
         // searching: false,
-        dom: 'lrtip',
-        columnDefs: [{ orderable: false, targets: 4 }],     // Definicion de las columnas --> "La columna con index 4 no es ordenable" (si fuera mas de una columna encapsula en un array)
-        order: [[1, 'asc']],                                // Orden ascendente en base a la columna con index 1 (empieza con el 0)
+        dom: 'lrtip',                                       // Borra el search que te viene por defecto.
+        columnDefs: [{ orderable: false, targets: 5 }],     // Definicion de las columnas --> "La columna con index 3 no es ordenable" (si fuera mas de una columna encapsula en un array)
+        order: [[0, 'asc']],                                // Orden ascendente en base a la columna con index 1 (empieza con el 0)
         orderCellsTop: true,                                // Para inicar en que fila de <thead> se añaden los eventos de ordenacion
     });
 
@@ -41,9 +42,8 @@ window.onload = function () {
     });
 
     // Filtro por rol
-    $('#rol_filter').on('change', function () { // .on('change', function...) es el .onChange
-        let obtainedFilterVal = $(this)[0].value;
-        table.column(3).search($(this)[0].value, {
+    $('#category_filter').on('change', function () { // .on('change', function...) es el .onChange
+        table.column(2).search($(this)[0].value, {
             exact: true
         }).draw();
     });
