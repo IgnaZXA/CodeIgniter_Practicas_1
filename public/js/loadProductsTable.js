@@ -33,7 +33,7 @@ window.onload = function () {
             {
                 data: 'id',
                 render: function (data) {
-                    if (userRole <= 2){ // SuperAdmin y Admin.
+                    if (userRole <= ROLES.Admin){ // SuperAdmin y Admin.
                         return `
                             <a href="/products/edit/${data}" class="btn btn-sm btn-primary">Editar</a>
                             <a href="/products/delete/${data}" class="btn btn-sm btn-danger"
@@ -48,8 +48,8 @@ window.onload = function () {
         ],
         // searching: false,
         dom: 'lrtip',                                       // Borra el search que te viene por defecto.
-        columnDefs: [{ orderable: false, targets: 5 }],     // Definicion de las columnas --> "La columna con index 3 no es ordenable" (si fuera mas de una columna encapsula en un array)
-        order: [[0, 'asc']],                                // Orden ascendente en base a la columna con index 1 (empieza con el 0)
+        columnDefs: [{ orderable: false, targets: PRODUCTS_TABLE.Actions }],     // Definicion de las columnas --> "La columna con index 3 no es ordenable" (si fuera mas de una columna encapsula en un array)
+        order: [[PRODUCTS_TABLE.ID, 'asc']],                                // Orden ascendente en base a la columna con index 1 (empieza con el 0)
         orderCellsTop: true,                                // Para inicar en que fila de <thead> se añaden los eventos de ordenacion
     });
 
@@ -64,7 +64,7 @@ window.onload = function () {
 
     // Filtro por rol
     $('#category_filter').on('change', function () { // .on('change', function...) es el .onChange
-        table.column(4).search($(this)[0].value, {
+        table.column(PRODUCTS_TABLE.Categories).search($(this)[0].value, {
             exact: true
         }).draw();
     });

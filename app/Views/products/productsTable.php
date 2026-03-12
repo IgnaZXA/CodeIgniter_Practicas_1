@@ -24,8 +24,8 @@
                     </tr>
 
                     <tr>
-                        <th><input class="filterInput" name="id"    type="text" placeholder="Buscar por ID"></th>
-                        <th><input class="filterInput" name="name"  type="text" placeholder="Buscar por nombre"></th>
+                        <th><input class="filterInput" name="id" type="text" placeholder="Buscar por ID"></th>
+                        <th><input class="filterInput" name="name" type="text" placeholder="Buscar por nombre"></th>
                         <th><input class="filterInput" name="price" type="text" placeholder="Buscar por precio"></th>
                         <th><input class="filterInput" name="stock" type="text" placeholder="Buscar por existencias"></th>
                         <th>
@@ -50,6 +50,15 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
-    <script>const userRole = parseInt("<?= session()->get('role_id') ?>");</script>
-    <script src='/js/loadProductsTable.js'></script>
+<script>
+    const userRole = parseInt("<?= session()->get('role_id') ?>");
+</script>
+<script>
+    const ROLES = <?= json_encode(array_column(\App\Enums\Roles::cases(),'value','name')) ?>;
+    const PRODUCTS_TABLE = <?= json_encode(array_column(\App\Enums\TableColumnsProducts::cases(),'value','name')) ?>;
+
+    console.log(PRODUCTS_TABLE);
+    console.log(ROLES);
+</script>
+<script src='/js/loadProductsTable.js'></script>
 <?= $this->endSection() ?>
