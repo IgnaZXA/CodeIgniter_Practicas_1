@@ -1,4 +1,5 @@
 window.onload = function () {
+
     let table = new DataTable('#productsTable', {
 
         ajax: {
@@ -6,22 +7,42 @@ window.onload = function () {
             dataSrc: 'data'
         },
 
+        processing: true,
+        serverSide: true,
+
+        pageLength: 100,
+        language: {
+            lengthLabels: {
+                '-1' : 'Show all'
+            }
+        },
+        
+        lengthMenu: [10, 25, 50, 75, 100, 500, -1],
+
         columns: [
             { data: 'id' },
             { data: 'name' },
-            { data: 'price' },
+            { 
+                data: 'price',
+                render : function (data) { // Se puede usar render para formatear el precio.
+                    return `${data} €`;
+                } 
+             },
             { data: 'stock' },
             { data: 'category_name' },
             {
                 data: 'id',
                 render: function (data) {
-                    return `
-                        <a href="/products/edit/${data}" class="btn btn-sm btn-primary">Editar</a>
-                        <a href="/products/delete/${data}" class="btn btn-sm btn-danger"
-                           onclick="return confirm('¿Estás seguro de eliminar este producto?')">
-                           Eliminar
-                        </a>
-                    `;
+                    if (userRole <= 2){ // SuperAdmin y Admin.
+                        return `
+                            <a href="/products/edit/${data}" class="btn btn-sm btn-primary">Editar</a>
+                            <a href="/products/delete/${data}" class="btn btn-sm btn-danger"
+                               onclick="return confirm('¿Estás seguro de eliminar este producto?')">
+                               Eliminar
+                            </a>
+                        `;
+                    }
+                    return "";
                 }
             }
         ],
@@ -43,7 +64,7 @@ window.onload = function () {
 
     // Filtro por rol
     $('#category_filter').on('change', function () { // .on('change', function...) es el .onChange
-        table.column(2).search($(this)[0].value, {
+        table.column(4).search($(this)[0].value, {
             exact: true
         }).draw();
     });

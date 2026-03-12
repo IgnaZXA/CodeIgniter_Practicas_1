@@ -50,6 +50,5 @@ $routes->get('/api/users',                  [UsuariosController::class, 'getAllU
 $routes->get('/api/products',               [ProductsController::class, 'getAllProductsJSON']);
 
 
-
 // $routes->get('/users/edit/(:num)', 'UsuariosController::edit/$1');       // En sintaxis antigua se tiene que poner $1 para indicar que se le pasa el argumento
 // $routes->get('/users/edit/(:num)', [UsuariosController::class, 'edit']); // En sintaxis moderna no hace falta el uso de $1, $2, ...

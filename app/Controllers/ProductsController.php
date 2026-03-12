@@ -114,26 +114,49 @@ class ProductsController extends BaseController
         }
     }
 
-    public function getAllProductsJSON(): ResponseInterface
-    {
-        try {
-            $requestPayload     = $this->productsModel->getProductsWithCategories();
-            $response           = $this->response
-                ->setStatusCode(ResponseInterface::HTTP_OK)
-                ->setJSON([
-                    'status'    =>  'OK',
-                    'data'      =>  $requestPayload,
-                ]);
-            return $response;
-        } catch (Throwable $err) {
-            log_message('error', '[ProductsController::getAllProductsJSON]' . $err);
-            $errResponse        = $this->response
-                ->setStatusCode(ResponseInterface::HTTP_NOT_FOUND)
-                ->setJSON([
-                    'status'    =>  'FAILED',
-                    'message'   =>  'Internal Server Error',
-                ]);
-            return $errResponse;
+        public function getAllProductsJSON(): ResponseInterface
+        {
+            try {
+                
+                // --- DATATABLES SERVER-SIDE CONFIG --- // 
+                $draw       = (int) $this->request->getGet('draw');
+                $start      = (int) $this->request->getGet('start');
+                $length     = (int) $this->request->getGet('length');
+                $order      = $this->request->getGet('order');
+                $columns    = $this->request->getGet('columns');
+                $filters = [
+                    'id' => $columns[0]['search']['value'],
+                    'name' => $columns[1]['search']['value'],
+                    'price' => $columns[2]['search']['value'],
+                    'stock' => $columns[3]['search']['value'],
+                    'category_name' => $columns[4]['search']['value']
+                ];
+
+
+                // TOTAL DE PRODUCTOS
+                $recordsTotal = $this->productsModel->countAll();
+
+                $data = $this->productsModel->getProductsWithCategories($length, $start, $length===-1, $filters, $order);
+
+                $response           = $this->response
+                    ->setStatusCode(ResponseInterface::HTTP_OK)
+                    ->setJSON([
+                        "draw" => $draw,
+                        "recordsTotal" => $recordsTotal,
+                        "recordsFiltered"=> $recordsTotal,
+                        "data"      =>  $data,
+                    ]);
+
+                return $response;
+            } catch (Throwable $err) {
+                log_message('error', '[ProductsController::getAllProductsJSON]' . $err);
+                $errResponse        = $this->response
+                    ->setStatusCode(ResponseInterface::HTTP_NOT_FOUND)
+                    ->setJSON([
+                        'status'    =>  'FAILED',
+                        'message'   =>  'Internal Server Error',
+                    ]);
+                return $errResponse;
+            }
         }
-    }
 }

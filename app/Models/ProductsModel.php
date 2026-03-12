@@ -33,7 +33,7 @@ class ProductsModel extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = 
+    protected $validationRules      =
     [
         'category_id'   => 'required',
         'name'          => 'required',
@@ -41,14 +41,14 @@ class ProductsModel extends Model
         'stock'         => 'required',
     ];
 
-    protected $validationMessages   = 
+    protected $validationMessages   =
     [
-        'category_id'   => [    'required'  => 'El category_id es obligatorio'              ],
-        'name'          => [    'required'  => 'El nombre del producto es obligatorio'      ],
-        'price'         => [    'required'  => 'El precio del producto es obligatorio'      ],
-        'stock'         => [    'required'  => 'El stock del producto es obligatorio'       ],
+        'category_id'   => ['required'  => 'El category_id es obligatorio'],
+        'name'          => ['required'  => 'El nombre del producto es obligatorio'],
+        'price'         => ['required'  => 'El precio del producto es obligatorio'],
+        'stock'         => ['required'  => 'El stock del producto es obligatorio'],
     ];
-    
+
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
@@ -64,17 +64,71 @@ class ProductsModel extends Model
     protected $afterDelete    = [];
 
 
-    public function getProductByID($id) {
+    public function getProductByID($id)
+    {
         return $this->find($id);
     }
 
-    /**
-     * @return array
-     */
-    public function getProductsWithCategories(): array  { // TODO: Tipar resultado
-        return $this
+public function getProductsWithCategories(
+    int $limit,
+    int $offset,
+    bool $isAllSelected,
+    array $filters,
+    $order
+): array {
+
+    $builder = $this
         ->select('products.*, product_categories.category_name')
-        ->join('product_categories', 'product_categories.id = products.category_id')
-        ->findAll();
+        ->join('product_categories', 'product_categories.id = products.category_id');
+
+    // ---- FILTROS ---- //
+
+    if (!empty($filters['id'])) {
+        $builder->like('products.id', $filters['id']);
     }
+
+    if (!empty($filters['name'])) {
+        $builder->like('products.name', $filters['name']);
+    }
+
+    if (!empty($filters['price'])) {
+        $builder->like('products.price', $filters['price']);
+    }
+
+    if (!empty($filters['stock'])) {
+        $builder->like('products.stock', $filters['stock']);
+    }
+
+    if (!empty($filters['category_name'])) {
+        $builder->like('product_categories.category_name', $filters['category_name']);  // 'category_name' => $columns[4]['search']['value']
+    }
+
+    // ---- ORDENACIÓN ---- //
+
+    $columnMap = [
+        0 => 'products.id',
+        1 => 'products.name',
+        2 => 'products.price',
+        3 => 'products.stock',
+        4 => 'product_categories.category_name'
+    ];
+
+    if (!empty($order)) {
+
+        $columnIndex = $order[0]['column'];
+        $direction   = $order[0]['dir'];
+
+        if (isset($columnMap[$columnIndex])) {
+            $builder->orderBy($columnMap[$columnIndex], $direction);
+        }
+    }
+
+    // ---- PAGINACIÓN ---- //
+
+    if ($isAllSelected) {
+        return $builder->findAll();
+    }
+
+    return $builder->findAll($limit, $offset);
+}
 }

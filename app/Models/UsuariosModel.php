@@ -106,12 +106,12 @@ class UsuariosModel extends Model
     // TODO: Tipar bien el resutlado de las funciones
     
     // --- READ --- //
-    public function getUsuarioById($id) : object
+    public function getUsuarioById($id) : array
     {
         return $this->where('id', $id)->first();
     }
 
-    public function getUsuarioByAccount($account) : object
+    public function getUsuarioByAccount($account) : array
     {
         return $this->where("cuenta_usuario", $account)->first();
     }

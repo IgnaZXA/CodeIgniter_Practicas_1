@@ -50,5 +50,6 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
-<script src='/js/loadProductsTable.js'></script>
+    <script>const userRole = parseInt("<?= session()->get('role_id') ?>");</script>
+    <script src='/js/loadProductsTable.js'></script>
 <?= $this->endSection() ?>
