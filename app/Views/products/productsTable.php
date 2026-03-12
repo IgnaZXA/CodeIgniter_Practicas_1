@@ -54,8 +54,13 @@
     const userRole = parseInt("<?= session()->get('role_id') ?>");
 </script>
 <script>
-    const ROLES = <?= json_encode(array_column(\App\Enums\Roles::cases(),'value','name')) ?>;
-    const PRODUCTS_TABLE = <?= json_encode(array_column(\App\Enums\TableColumnsProducts::cases(),'value','name')) ?>;
+    const ROLES = <?= json_encode(
+                        array_reduce(\App\Enums\Roles::cases(), function ($carry, $rol) {
+                            $carry[$rol->name] = $rol->id();
+                            return $carry;
+                        }, [])
+                    ) ?>;
+    const PRODUCTS_TABLE = <?= json_encode(array_column(\App\Enums\TableColumnsProducts::cases(), 'value', 'name')) ?>;
 
     console.log(PRODUCTS_TABLE);
     console.log(ROLES);
